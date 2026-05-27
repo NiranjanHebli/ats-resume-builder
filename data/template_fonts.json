@@ -1,0 +1,82 @@
+{
+  "sample_resume_1.pdf": {
+    "name":            { "font": "TimesNewRoman-Bold", "size": 14.0, "align": "center" },
+    "contact":         { "font": "TimesNewRoman",      "size": 11.0, "align": "center" },
+    "section_heading": { "font": "TimesNewRoman-Bold", "size": 11.0, "align": "left"   },
+    "sub_heading":     { "font": "TimesNewRoman-Bold", "size": 11.0, "align": "left"   },
+    "body":            { "font": "TimesNewRoman",      "size": 11.0, "align": "left"   },
+    "bullet":          { "font": "TimesNewRoman",      "size": 11.0, "align": "left"   }
+  },
+  "sample_resume_2.pdf": {
+    "name":            { "font": "Arial-Bold",   "size": 14.0, "align": "center" },
+    "contact":         { "font": "Arial",         "size": 11.0, "align": "center" },
+    "section_heading": { "font": "Arial-Bold",   "size": 11.0, "align": "left"   },
+    "sub_heading":     { "font": "Georgia-Bold",  "size": 10.5, "align": "left"   },
+    "body":            { "font": "Arial",         "size": 10.5, "align": "left"   },
+    "bullet":          { "font": "Arial",         "size": 10.5, "align": "left"   }
+  },
+  "sample_resume_3.pdf": {
+    "name":            { "font": "Georgia-Bold",  "size": 14.0, "align": "center" },
+    "contact":         { "font": "Georgia",        "size": 10.1, "align": "center" },
+    "section_heading": { "font": "Georgia-Bold",  "size": 10.1, "align": "left"   },
+    "sub_heading":     { "font": "Georgia-Bold",  "size": 10.1, "align": "left"   },
+    "body":            { "font": "Georgia",        "size": 10.1, "align": "left"   },
+    "bullet":          { "font": "Georgia",        "size": 10.1, "align": "left"   }
+  },
+  "sample_resume_4.pdf": {
+    "name":            { "font": "TimesNewRoman-Bold", "size": 15.1, "align": "center" },
+    "contact":         { "font": "TimesNewRoman",      "size": 10.1, "align": "center" },
+    "section_heading": { "font": "TimesNewRoman-Bold", "size": 10.1, "align": "left"   },
+    "sub_heading":     { "font": "TimesNewRoman-Bold", "size": 10.1, "align": "left"   },
+    "body":            { "font": "TimesNewRoman",      "size": 10.1, "align": "left"   },
+    "bullet":          { "font": "TimesNewRoman",      "size": 10.1, "align": "left"   }
+  },
+  "sample_resume_5.pdf": {
+    "name":            { "font": "TimesNewRoman-Bold", "size": 13.0, "align": "center" },
+    "contact":         { "font": "TimesNewRoman",      "size": 10.6, "align": "center" },
+    "section_heading": { "font": "TimesNewRoman-Bold", "size": 11.0, "align": "left"   },
+    "sub_heading":     { "font": "TimesNewRoman-Bold", "size": 10.6, "align": "left"   },
+    "body":            { "font": "TimesNewRoman",      "size": 10.6, "align": "left"   },
+    "bullet":          { "font": "TimesNewRoman",      "size": 10.6, "align": "left"   }
+  },
+  "sample_resume_6.pdf": {
+    "name":            { "font": "Arial-Bold",   "size": 14.0, "align": "center" },
+    "contact":         { "font": "Arial",         "size": 10.0, "align": "center" },
+    "section_heading": { "font": "Arial-Bold",   "size": 10.0, "align": "left"   },
+    "sub_heading":     { "font": "Arial-Bold",   "size": 10.0, "align": "left"   },
+    "body":            { "font": "Arial",         "size": 10.0, "align": "left"   },
+    "bullet":          { "font": "Arial",         "size": 10.0, "align": "left"   }
+  },
+  "sample_resume_7.pdf": {
+    "name":            { "font": "TrebuchetMS-Bold", "size": 14.0, "align": "center" },
+    "contact":         { "font": "TrebuchetMS",       "size": 11.0, "align": "center" },
+    "section_heading": { "font": "TrebuchetMS-Bold", "size": 11.0, "align": "left"   },
+    "sub_heading":     { "font": "TrebuchetMS-Bold", "size": 11.0, "align": "left"   },
+    "body":            { "font": "TrebuchetMS",       "size": 11.0, "align": "left"   },
+    "bullet":          { "font": "TrebuchetMS",       "size": 11.0, "align": "left"   }
+  },
+  "sample_resume_8.pdf": {
+    "name":            { "font": "Georgia-Bold",  "size": 14.0, "align": "center" },
+    "contact":         { "font": "Georgia",        "size": 12.0, "align": "center" },
+    "section_heading": { "font": "Georgia-Bold",  "size": 12.0, "align": "left"   },
+    "sub_heading":     { "font": "Georgia-Bold",  "size": 12.0, "align": "left"   },
+    "body":            { "font": "Georgia",        "size": 12.0, "align": "left"   },
+    "bullet":          { "font": "Georgia",        "size": 12.0, "align": "left"   }
+  },
+  "sample_resume_9.pdf": {
+    "name":            { "font": "Arial-Bold",    "size": 16.1, "align": "center" },
+    "contact":         { "font": "Arial",          "size": 10.1, "align": "center" },
+    "section_heading": { "font": "Arial-Bold",    "size": 10.1, "align": "left"   },
+    "sub_heading":     { "font": "Arial-Bold",    "size": 10.1, "align": "left"   },
+    "body":            { "font": "Arial",          "size": 10.1, "align": "left"   },
+    "bullet":          { "font": "Arial",          "size": 10.1, "align": "left"   }
+  },
+  "sample_resume_10.pdf": {
+    "name":            { "font": "TimesNewRoman-Bold", "size": 14.0, "align": "center" },
+    "contact":         { "font": "TimesNewRoman",      "size": 11.0, "align": "center" },
+    "section_heading": { "font": "TimesNewRoman-Bold", "size": 11.0, "align": "left"   },
+    "sub_heading":     { "font": "TimesNewRoman-Bold", "size": 11.0, "align": "left"   },
+    "body":            { "font": "TimesNewRoman",      "size": 11.0, "align": "left"   },
+    "bullet":          { "font": "TimesNewRoman",      "size": 11.0, "align": "left"   }
+  }
+}

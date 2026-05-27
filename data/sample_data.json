@@ -1,0 +1,366 @@
+{
+  "sample_resume_1.pdf": {
+    "Contact": {
+      "Name": "FIRSTNAME LASTNAME",
+      "Location": "Boston, MA [Optional]",
+      "Phone": "617-555-1212",
+      "Email": "email@address",
+      "Links": "[a LinkedIn profile or portfolio link or other info could be added here, if needed]"
+    },
+    "Summary": "",
+    "Objective": "",
+    "Education": [
+      {
+        "school": "HARVARD UNIVERSITY Extension School",
+        "location": "Cambridge, MA",
+        "degree": "Master of Liberal Arts (ALM), Field of Study [or Bachelor of Liberal Arts (ALB)]",
+        "dates": "Graduation Date [Month Year]"
+      },
+      {
+        "school": "UNDERGRADUATE INSTITUTION [Note: If Applicable]",
+        "location": "City, State or Country",
+        "degree": "Bachelor of Arts in [Topic]",
+        "dates": "Graduation Date [Month Year]"
+      }
+    ],
+    "Experience": [
+      {
+        "company": "ORGANIZATION",
+        "location": "City, State (or Remote)",
+        "title": "Position Title",
+        "dates": "Month Year \u2013 Month Year",
+        "bullets": "Beginning with your most recent position, describe your experience, skills, and resulting outcomes/impact.\nBegin each line with an action verb and include details that will help the reader understand your accomplishments, skills, knowledge, abilities, or achievements.\nQuantify where possible.\nDo not use personal pronouns; each line should be a phrase rather than a full sentence."
+      },
+      {
+        "company": "ORGANIZATION",
+        "location": "City, State (or Remote)",
+        "title": "Position Title",
+        "dates": "Month Year \u2013 Month Year",
+        "bullets": "With your next-most recent position, describe your experience, skills, and resulting outcomes/impact.\nBegin each line with an action verb and include details that will help the reader understand your accomplishments, skills, knowledge, abilities, or achievements."
+      }
+    ],
+    "Projects": [],
+    "Skills": "Technical Skills: List computer software and programming languages\nLanguage Skills: List foreign languages and your level of fluency\nLaboratory Skills: List scientific techniques and tools used",
+    "Certifications": "",
+    "Interests": ""
+  },
+  "sample_resume_2.pdf": {
+    "Contact": {
+      "Name": "Jin Wang",
+      "Location": "",
+      "Phone": "(555) 555-5555",
+      "Email": "email@gmail.com",
+      "Links": ""
+    },
+    "Summary": "",
+    "Objective": "",
+    "Education": [
+      {
+        "school": "Harvard University, Extension School",
+        "location": "",
+        "degree": "Master of Liberal Arts, Information Management Systems",
+        "dates": "May 20XX",
+        "gpa": "GPA 4.0",
+        "bullets": "Class Marshall Award\nDean's List Academic Achievement Award\nData Science Project: Financial Market Analysis Using Machine Learning\nCapstone Project: Enterprise Data Lake"
+      },
+      {
+        "school": "University of Malaya",
+        "location": "",
+        "degree": "Bachelor of Computer Science",
+        "dates": "June 20XX",
+        "gpa": "",
+        "bullets": ""
+      }
+    ],
+    "Experience": [
+      {
+        "company": "Rande Corporate & Investment Banking",
+        "location": "Detroit, MI",
+        "title": "Associate \u2013 Information Technology",
+        "dates": "September 20XX \u2013 Present",
+        "bullets": "Lead a team of six people to manage, operate, and support low latency post-trade brokerage platform\nImproved the performance of straight-through processing by tuning database applications\nReduced number of major incidents by 23% through problem management\nAutomate manual back-office processing through scripting and automation engine\nActively participate in and contribute to internal data science project initiatives"
+      },
+      {
+        "company": "Olson Financial",
+        "location": "Singapore",
+        "title": "Associate \u2013 Information Technology",
+        "dates": "February 20XX \u2013 September 20XX",
+        "bullets": "Built a new application support team of five people focusing on post-trading straight- through processing and data warehouse extract-transform-load processing\nDesigned and implemented global application monitoring platform.\nEliminated 80% of manual checks for trading support, and decreased SLA breaches for client reporting by 15%"
+      },
+      {
+        "company": "PS Engineering Information Ltd.",
+        "location": "Singapore",
+        "title": "Software Developer \u2013 Technology Office",
+        "dates": "July 20XX \u2013 January 20XX",
+        "bullets": "Built Command & Control System for Singapore Civil Defence Force using C# .NET WCF Services\nIntegrated proprietary software components with commercial off-the-shell software product"
+      },
+      {
+        "company": "Well",
+        "location": "Beijing, China",
+        "title": "Software Developer",
+        "dates": "June 20XX \u2013 June 20XX",
+        "bullets": "Built supply chain management system using Java Spring/Hibernate Framework and Service Oriented Architecture\nImproved the performance of real-time business activity monitoring report and reduce the report response time by more than 50%"
+      },
+      {
+        "company": "Silver Technologies Ltd.",
+        "location": "Singapore",
+        "title": "Software Developer",
+        "dates": "May 20XX \u2013 May 20XX",
+        "bullets": "Developed web-based Point of Sale (POS) application using C# .NET for a multinational fashion retailor\nResearched and implemented RFID authentication software module"
+      }
+    ],
+    "Projects": [],
+    "Skills": "Machine Learning\nPython/Scikit-learn\nSpark\nData Visualization\nQuantitative Analysis\nCloud Computing\nHadoop\nJava/C#\nUnix Scripting\nOracle/SQL Server\nPLSQL/T-SQL\nData Warehouse/ETL\nRDBMS Tuning\nNetwork Protocols\nAgile & DevOps\nWeb Development",
+    "Certifications": "4-course graduate-level certificate in Data Science, Harvard University - January 20XX\nITIL Foundation V3 - January 20XX\nProject Management Professional (PMP)\u00ae - March 20XX\nCertified Salesforce Developer - October 20XX",
+    "Interests": ""
+  },
+  "default": {
+    "Contact": {
+      "Name": "JOHN DOE",
+      "Location": "New York, NY",
+      "Phone": "212-555-0198",
+      "Email": "john.doe@example.com",
+      "Links": "linkedin.com/in/johndoe"
+    },
+    "Summary": "Experienced professional with a strong track record of success in driving operational excellence and strategic growth.",
+    "Objective": "To secure a challenging role where I can leverage my skills to contribute to organizational success.",
+    "Education": [
+      {
+        "school": "University Name",
+        "location": "City, State",
+        "degree": "Degree Title in Field",
+        "dates": "Month Year"
+      }
+    ],
+    "Experience": [
+      {
+        "company": "Company Name",
+        "location": "City, State",
+        "title": "Job Title",
+        "dates": "Month Year \u2013 Month Year",
+        "bullets": "Action verb demonstrating achievement or skill.\nAnother action verb with quantified result."
+      }
+    ],
+    "Projects": [
+      {
+        "title": "Project Title",
+        "dates": "Month Year",
+        "bullets": "Description of project and outcomes."
+      }
+    ],
+    "Skills": "Skill 1, Skill 2, Skill 3",
+    "Certifications": "Certification Name, Year",
+    "Interests": "Interest 1, Interest 2"
+  },
+  "sample_resume_3.pdf": {
+    "Contact": {
+      "Name": "Nadia Smythe",
+      "Location": "",
+      "Phone": "555-555-5555",
+      "Email": "email@g.harvard.edu",
+      "Links": "linkedin.com/in/youracct/"
+    },
+    "Summary": "",
+    "Objective": "",
+    "Education": [
+      {
+        "school": "HARVARD UNIVERSITY EXTENSION SCHOOL",
+        "location": "",
+        "degree": "Master of Liberal Arts, Management",
+        "dates": "20XX",
+        "gpa": "",
+        "bullets": "Recipient of Dean's List Academic Achievement Award\nSelected for the Venture Incubation Program at Harvard Innovation Lab and winner of Stretch Award, 20XX"
+      },
+      {
+        "school": "UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO",
+        "location": "",
+        "degree": "Bachelor of Business Administration in Marketing",
+        "dates": "20XX",
+        "gpa": "",
+        "bullets": "Graduated from Honors Program, Rank 1\nCollege Student of the year 20XX awarded by Expansion Time Warner Magazine\nRecipient of L'Or\u00e9al Excellence Award"
+      }
+    ],
+    "Experience": [
+      {
+        "company": "AGENDA28",
+        "location": "",
+        "title": "CO-FOUNDER/ DESIGN STRATEGY DIRECTOR",
+        "dates": "September 20XX - Present",
+        "bullets": "Founded design studio specializing in social impact that develops integral design strategies to increase effectiveness of social initiatives and empowers young designers from underserved communities in Mexico\nLed 20 design projects for nonprofits and social enterprises in the U.S., Mexico, India, Zambia, Australia, Switzerland\nWon Most Innovative Idea at Educational Innovation and Social Entrepreneurship Conference at Harvard - May 2015"
+      },
+      {
+        "company": "ENTERPRISSE DE MEXICO",
+        "location": "",
+        "title": "MARKETING & SALES DIRECTOR",
+        "dates": "November 20XX - January 20XX",
+        "bullets": "Led the Marketing and Sales teams, achieving a company growth of 163% in 5 years\nReinforced the brand by redesigning the corporate identity and executing online marketing campaigns\nImproved the customer service by implementing a new Sales Methodology, a CRM and a Loyalty Program\nDeveloped a new Corporate Strategic Planning methodology and coordinated all related activities\nExpanded operations to 9 new countries in Latin America"
+      },
+      {
+        "company": "OPTICIANE MEXICO",
+        "location": "",
+        "title": "PR & MEDIA EXECUTIVE",
+        "dates": "January 20XX - October 20XX",
+        "bullets": "Managed the PR activities for 16 eyewear brands\nPlanned events for Tiffany, Chanel, and Ralph Lauren winning best congress planner 2008 (Convenciones Mag.)\nCoordinated media campaigns for RayBan, Vogue and Prada\nAccomplished $1,300,000 USD in Clipping (free advertisement)"
+      },
+      {
+        "company": "CLAIROLE MEXICO",
+        "location": "",
+        "title": "PREFERENCE BRAND MANAGER",
+        "dates": "March 20XX - December 20XX",
+        "bullets": "Performed marketing activities, including forecasts, new products launch, advertisement and promotions\nLed the Casting Cr\u00e8me Gloss and Color Rays market research\nAchieved 15% in annual growth vs 0.5% budgeted\nTRAINEE: Managed the Mexico City's point of sales team\nINTERNSHIP: Supported Paris' hair color brands with sales forecasts, design of promotions and PR events"
+      }
+    ],
+    "Projects": [],
+    "Skills": "",
+    "Certifications": "",
+    "Interests": "**INCUBATEC-** Mexico City (January 20XX - May 20XX): Coordinator of entrepreneurs program\n**ARTE NAJEL-** Chiapas, Mexico (July 20XX - March 20XX): Marketing advisor for fair trade project\n**POLE-** Nairobi, Kenya (August 20XX): Assistance to Mercy Community School to develop business plan"
+  },
+  "sample_resume_4.pdf": {
+    "Contact": {
+      "Name": "Jesse Jayant",
+      "Location": "",
+      "Phone": "555-555-5555",
+      "Email": "you@gmail.com",
+      "Links": ""
+    },
+    "Summary": "Finance professional with over 10 years of experience in publicly traded and privately held enterprises. Proven track record in complex and capital-intensive global industries, delivering value and innovation in Finance, Strategy, and Corporate Planning.",
+    "Objective": "",
+    "Skills": "Financial Analysis\nBudgeting\nStrategic Planning\nMonth-End Close\nForecasting\nBusiness Planning\nReporting\nCapital Planning\nM&A\nFinancial Modeling\nValuation\nProject Planning",
+    "Experience": [
+      {
+        "company": "USA Airlines, Chicago, IL",
+        "location": "",
+        "title": "Sr. Financial Analyst, Information Technology Financial Planning",
+        "dates": "20XX - 20XX",
+        "bullets": "Developed and monitored a $1B annual Information Technology (IT) budget for 2012 & 2013.\nTracked spending against budget and project progress to ensure effectiveness of financial controls and accuracy.\nPrepared and presented monthly, quarterly, and annual spending reports to CIO.\nImplemented new technology (SharePoint Portal) and processes to facilitate monthly reporting that decreased reporting cycle by over 40%.\nConstructed a comprehensive monthly forecasting model to reduce forecast cycle time from 2 weeks to under 4 days.\nAs a member of USA's Chapter 11 Restructuring Team, conducted sensitivity analysis to re-negotiate 30 IT vendor contracts that resulted in 15% savings."
+      },
+      {
+        "company": "Dream Properties, Bangalore, India",
+        "location": "",
+        "title": "Sr. Financial Analyst, Finance & Strategic Planning",
+        "dates": "20XX - 20XX",
+        "bullets": "Analyzed and recommended to the CFO and CEO viable business investments in Real Estate projects and lease commitments ($5M-$25M).\nIdentified redundancy in processes and personnel that allowed $3M of annual expenses to become a source of revenue.\nLed a team of 7 professionals to identify revenue potential and optimization as key drivers of future portfolio strategy."
+      },
+      {
+        "company": "USA Airlines, Chicago, IL",
+        "location": "",
+        "title": "Sr. Financial Analyst, Human Resources Finance",
+        "dates": "20XX - 20XX",
+        "bullets": "Divisional controller, leading financial reporting and analysis, accounting, budgeting, P&L optimization for $200M HR division including Compensation, Vendor Management, Retirement.\nLed effort to right-size USA's unionized workforce. Reduced total headcount by approximately 800 FTEs, resulting in annualized savings of $60M.\nModeled and presented the financial structure of USA's variable compensation & bonus plans to executive management."
+      },
+      {
+        "company": "",
+        "location": "",
+        "title": "Sr. Financial Analyst, Operations Business Planning",
+        "dates": "20XX - 20XX",
+        "bullets": "Directed the implementation of a $50M technology project at over 10 major US Airports (including Dallas/Fort Worth, Chicago, New York, Miami, Los Angeles) that scaled to support over 15,000 employees, increased productivity by 12%, and reduced lost baggage expenses by 8%.\nBuilt the Checked Baggage Fees Model and projected revenue stream ($12M) by forecasting the change in passengers' baggage check-in behavior.\nDeveloped an optimization model to define refurbishment strategy for over 300 ground service equipment that led to $2M savings.\nDesigned USA's Rent Pricing Model to determine lease commitments for all US airports."
+      },
+      {
+        "company": "USA Owl Airlines, Chicago, IL",
+        "location": "",
+        "title": "Financial Analyst, Financial Analysis & Capital Planning",
+        "dates": "20XX - 20XX",
+        "bullets": "As a member the Finance Integration Team, collaborated with Merrill Lynch to develop a spinoff report to provide guidance and enable departments estimate post spin-off revenue and cost synergies.\nAssessed departmental needs and partnered with internal customers on the composition of USA's capital plan for 2008 ($500M).\nServed as a liaison between Corporate Planning and Capital Planning; analyzed and acquired funding of $120M for large capital projects in 1 year.\nIdentified and implemented cost-saving initiatives of $250K through ground service equipment optimization at 60 US airports."
+      },
+      {
+        "company": "Alpro Laboratories, Detroit, MI",
+        "location": "",
+        "title": "Financial Analyst, Finance & Business Planning",
+        "dates": "20XX - 20XX",
+        "bullets": "Re-designed the revenue forecast model to reduce budget preparation time by 30% in 4 months.\nAnalyzed and recommended the CFO to adjust product production based on competing companies' market share for multiple product lines."
+      },
+      {
+        "company": "Morgan Firm, Wood, MI",
+        "location": "",
+        "title": "Intern",
+        "dates": "20XX - 20XX",
+        "bullets": "Assisted portfolio managers in analyzing stocks and mutual funds for prospective and existing clients.\nParticipated in client financial planning discussions and quarterly portfolio review."
+      }
+    ],
+    "Projects": [],
+    "Education": [
+      {
+        "school": "Harvard University, Extension School, Cambridge, MA",
+        "location": "",
+        "degree": "Master of Liberal Arts - Management",
+        "dates": "May 20XX",
+        "gpa": "",
+        "bullets": "Dean's List, GPA 3.89"
+      },
+      {
+        "school": "",
+        "location": "",
+        "degree": "Graduate Certificate \u2013 Organizational Behavior",
+        "dates": "May 20XX",
+        "gpa": "",
+        "bullets": ""
+      },
+      {
+        "school": "Kalamazoo College, Kalamazoo, MI",
+        "location": "",
+        "degree": "Bachelor of Business Administration - Finance",
+        "dates": "December 20XX",
+        "gpa": "",
+        "bullets": "Summa Cum Laude, Dean's List, GPA 3.92"
+      }
+    ],
+    "Certifications": "",
+    "Interests": "**Cultural Experiences:** Visited over 30 countries in 4 continents and lived in 3 countries\n**Social Impact:** Susan G. Komen Walk Fundraising \u2013 Member (2012-2013), Mother Teresa Missionaries of Charity - Committee Member (2010-2011), Big Brother Big Sister \u2013 Member (2008)\n**Personal Interests:** Avid reader, traveler, bicyclist"
+  },
+  "sample_resume_5.pdf": {
+    "Contact": {
+      "Name": "Jacob A. McLean",
+      "Location": "54 Dunster St \u2022 Cambridge, MA 02138",
+      "Phone": "(555) 555-5555",
+      "Email": "you@gmail.com",
+      "Links": ""
+    },
+    "Summary": "",
+    "Objective": "",
+    "Education": [
+      {
+        "school": "HARVARD UNIVERSITY Extension School",
+        "location": "",
+        "degree": "Master of Liberal Arts, Information Management Systems",
+        "dates": "May 20XX",
+        "gpa": "",
+        "bullets": "Dean's List Academic Achievement Award recipient\nRelevant coursework: Trends in Enterprise Information Systems, Principles of Finance, Data Mining and Forecast Management, Resource Planning and Allocation Management, Simulation for Managerial Decision Making"
+      },
+      {
+        "school": "RUTGERS, THE STATE UNIVERSITY OF NEW JERSEY",
+        "location": "",
+        "degree": "Bachelor of Arts in Computer Science with Mathematics minor",
+        "dates": "May 20XX",
+        "gpa": "",
+        "bullets": ""
+      }
+    ],
+    "Experience": [
+      {
+        "company": "STATE STREET CORPORATION",
+        "location": "Boston, MA",
+        "title": "Principal \u2013 Simulated Technology",
+        "dates": "December 20XX - July 20XX",
+        "bullets": "Led eight cross-functional, geographically dispersed teams to support quality for the reporting system\nImproved process efficiency 75% by standardizing end to end project management workflow\nReduced application testing time 30% by automating shorter testing phases for off cycle projects\nConducted industry research on third-party testing tools and prepared recommendations for maximum return on investment"
+      },
+      {
+        "company": "FIDELITY INVESTMENTS",
+        "location": "Boston, MA",
+        "title": "Associate \u2013 Interactive Technology",
+        "dates": "January 20XX \u2013 November 20XX",
+        "bullets": "Initiated automated testing efforts that reduced post production defects by 40%\nImplemented initiatives to reduce overall project time frames by involving quality team members early in the Software Development Life Cycle iterations\nDeveloped a systematic approach to organize and document the requirements of the to-be-system\nProvided leadership to off-shore tech teams via training and analyzing business requirements"
+      },
+      {
+        "company": "L.L. BEAN, INC.",
+        "location": "Freeport, ME",
+        "title": "IT Consultant",
+        "dates": "June 20XX \u2013 December 20XX",
+        "bullets": "Collaborated closely with the business teams to streamline production release strategy plans\nManaged team of five test engineers to develop data driven framework that increased application testing depth and breadth by 150%\nGenerated statistical analysis of quality and requirements traceability matrices to determine the linear relationship of development time frames to defect identification and subsequent resolution\nLed walkthroughs with project stakeholders to set expectations and milestones for the project team"
+      }
+    ],
+    "Projects": [],
+    "Skills": "MS Excel, PowerPoint, Relational Databases, Project Management, Quantitative Analysis, SQL, Java",
+    "Certifications": "",
+    "Interests": "Organized computer and English literacy workshops for underprivileged children in South Asia, 20XX\nStudent Scholarship Recipient, National Conference on Race and Ethnicity, 20XX-20XX"
+  }
+}

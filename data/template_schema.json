@@ -1,0 +1,123 @@
+{
+  "sample_resume_1.pdf": {
+    "header_align": "center",
+    "has_line": false,
+    "fields": [
+      "contact",
+      "summary",
+      "education",
+      "experience",
+      "skills"
+    ]
+  },
+  "sample_resume_2.pdf": {
+    "header_align": "left",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "education",
+      "skills",
+      "experience",
+      "certifications"
+    ]
+  },
+  "sample_resume_3.pdf": {
+    "header_align": "center",
+    "has_line": false,
+    "fields": [
+      "contact",
+      "education",
+      "experience",
+      "interests"
+    ]
+  },
+  "sample_resume_4.pdf": {
+    "header_align": "left",
+    "has_line": false,
+    "fields": [
+      "contact",
+      "summary",
+      "skills",
+      "experience",
+      "education",
+      "interests"
+    ]
+  },
+  "sample_resume_5.pdf": {
+    "header_align": "center",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "education",
+      "experience",
+      "skills",
+      "interests"
+    ]
+  },
+  "sample_resume_6.pdf": {
+    "header_align": "left",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "summary",
+      "experience",
+      "projects",
+      "education",
+      "skills"
+    ]
+  },
+  "sample_resume_7.pdf": {
+    "header_align": "left",
+    "has_line": false,
+    "fields": [
+      "contact",
+      "experience",
+      "education",
+      "skills"
+    ]
+  },
+  "sample_resume_8.pdf": {
+    "header_align": "center",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "summary",
+      "experience",
+      "education",
+      "skills"
+    ]
+  },
+  "sample_resume_9.pdf": {
+    "header_align": "center",
+    "has_line": false,
+    "fields": [
+      "contact",
+      "objective",
+      "experience",
+      "education"
+    ]
+  },
+  "sample_resume_10.pdf": {
+    "header_align": "left",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "interests"
+    ]
+  },
+  "default": {
+    "header_align": "left",
+    "has_line": true,
+    "fields": [
+      "contact",
+      "summary",
+      "experience",
+      "education",
+      "skills"
+    ]
+  }
+}

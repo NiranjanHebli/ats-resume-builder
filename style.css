@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+#MainMenu, footer, header   { visibility: hidden; }
+
+.stApp {
+    background:
+        radial-gradient(ellipse at 10% 20%, rgba(99,102,241,.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 75%, rgba(14,165,233,.18) 0%, transparent 55%),
+        linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f1c2e 100%);
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    color: #f1f5f9 !important;
+}
+
+h3 {
+    color: #cbd5e1 !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    margin-bottom: 8px !important;
+}
+
+.field-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+
+.stTextInput > div > div > input,
+.stTextArea  > div > div > textarea {
+    background : #ffffff !important;
+    border     : 1px solid rgba(0,0,0,0.15) !important;
+    border-radius : 8px !important;
+    color      : #000000 !important;
+    font-size  : 0.9rem !important;
+}
+
+label {
+    color      : #94a3b8 !important;
+    font-size  : 0.82rem !important;
+    font-weight: 500 !important;
+}
+
+.stSelectbox > div > div {
+    background   : #ffffff !important;
+    border       : 1px solid rgba(0,0,0,0.15) !important;
+    border-radius: 8px !important;
+    color        : #000000 !important;
+}
+
+hr { border-color: rgba(255,255,255,0.1) !important; margin: 20px 0 !important; }
+
+.stButton > button {
+    width         : 100%;
+    background    : linear-gradient(135deg, #6366f1, #0ea5e9) !important;
+    color         : #fff !important;
+    border        : none !important;
+    border-radius : 10px !important;
+    padding       : 10px 20px !important;
+    font-weight   : 600 !important;
+}
+.stButton > button:hover {
+    background    : linear-gradient(135deg, #4f46e5, #0284c7) !important;
+    color         : #fff !important;
+}
+.stDownloadButton > button {
+    width         : 100%;
+    background    : linear-gradient(135deg, #059669, #10b981) !important;
+    color         : #fff !important;
+    border        : none !important;
+    border-radius : 10px !important;
+    padding       : 12px 24px !important;
+    font-weight   : 600 !important;
+}
+.stDownloadButton > button:hover {
+    background    : linear-gradient(135deg, #047857, #059669) !important;
+    color         : #fff !important;
+}
