@@ -47,6 +47,7 @@ def render_editor():
                     type=["pdf", "docx"],
                     label_visibility="collapsed"
                 )
+                st.caption("Supported: PDF, DOCX (Max 10MB)")
 
         # Handle import if a new file is uploaded
         if uploaded_resume is not None:
