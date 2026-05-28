@@ -25,7 +25,7 @@ def render_editor():
         "<h2>ATSCraft</h2>",
         unsafe_allow_html=True,
     )
-    col1, col2 = st.columns([9, 10], gap="large")
+    col1, col2 = st.columns([1, 1], gap="large")
 
     with col1:
         st.markdown("### Template")
@@ -53,7 +53,17 @@ def render_editor():
             st.session_state.contact_phone = contact.get("Phone", "")
             st.session_state.contact_email = contact.get("Email", "")
             st.session_state.contact_location = contact.get("Location", "")
-            st.session_state.contact_links = contact.get("Links", "")
+
+            # Pre-fill profiles
+            profs = contact.get("Profiles", [])
+            if not profs and "Links" in contact:
+                # Convert old single Links string to a Profile format if needed
+                profs = [{"name": "Link", "link": contact["Links"]}]
+            
+            st.session_state.prof_count = max(1, len(profs))
+            for i, prof in enumerate(profs):
+                st.session_state[f"prof_name_{i}"] = prof.get("name", "")
+                st.session_state[f"prof_link_{i}"] = prof.get("link", "")
 
             # Pre-fill text areas
             st.session_state.summary_input = s_data.get("Summary", "")
@@ -90,6 +100,7 @@ def render_editor():
                 st.session_state[f"proj_title_{i}"] = proj.get("title", "")
                 st.session_state[f"proj_dates_{i}"] = proj.get("dates", "")
                 st.session_state[f"proj_desc_{i}"] = proj.get("bullets", "")
+                st.session_state[f"proj_link_{i}"] = proj.get("link", "")
 
             # Get page count of the selected template to pre-fill height
             if selected_template and selected_template != "Default":
@@ -122,7 +133,10 @@ def render_editor():
 
         form_container = st.container(height=form_height)
         with form_container:
-            name, phone, email, location, links = render_contact_info()
+            name, phone, email, location = render_contact_info()
+            
+            from ui_components import render_profiles
+            profiles = render_profiles()
 
             summary = ""
             if "summary" in fields:
@@ -171,7 +185,7 @@ def render_editor():
             phone=phone,
             email=email,
             location=location,
-            links=links,
+            profiles=profiles,
             summary=summary,
             objective=objective,
             experiences=experiences,

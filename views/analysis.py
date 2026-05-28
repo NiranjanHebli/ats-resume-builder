@@ -82,9 +82,12 @@ def render_analysis():
     
     col1, col_rest = st.columns([1.2, 2])
     
+    api_key = os.getenv("GROQ_API_KEY", "")
+    
     with col1:
+        if not api_key:
+            st.error("🔑 **Missing Groq API Key:** Please set `GROQ_API_KEY` in your `.env` file to enable dynamic analysis.")
         st.markdown("### Analysis Settings")
-        api_key = st.text_input("Groq API Key", type="password", placeholder="gsk_...")
         job_title = st.text_input("Target Job Title", value="Senior Frontend Developer")
         job_description = st.text_area("Job Description", placeholder="Paste the job description here...", height=150)
         
@@ -107,7 +110,7 @@ def render_analysis():
                 else:
                     st.error("Failed to extract text from the file.")
         else:
-            st.info("Showing Demo Analysis. To generate a real, dynamic analysis based on your PDF, please enter a valid Groq API Key in the sidebar.")
+            st.info("Showing Demo Analysis. To generate a real, dynamic analysis based on your PDF, please configure a valid `GROQ_API_KEY` in your `.env` file.")
             analysis_data = {
                 "score": 85,
                 "score_label": "Excellent",

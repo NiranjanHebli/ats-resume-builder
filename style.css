@@ -84,7 +84,35 @@ hr { border-color: rgba(255,255,255,0.1) !important; margin: 20px 0 !important; 
     color         : #fff !important;
 }
 
-/* Sidebar and Expander styling */
+/* ── Prevent form columns from overflowing when sidebar is open ── */
+
+/* Ensure the main block doesn't create horizontal scroll */
+[data-testid="stMain"] > div:first-child {
+    overflow-x: hidden !important;
+}
+
+/* Make all column containers respect their parent width */
+[data-testid="stHorizontalBlock"] {
+    flex-wrap: nowrap;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Each column child must not overflow */
+[data-testid="stColumn"] {
+    min-width: 0 !important;
+    overflow: hidden;
+}
+
+/* Inputs and textareas should always fit their column */
+.stTextInput > div > div > input,
+.stTextArea  > div > div > textarea {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ── Sidebar and Expander styling ── */
 [data-testid="stSidebar"] {
     background-color: #0f172a !important;
     border-right: 1px solid rgba(255,255,255,0.05);
@@ -257,4 +285,52 @@ hr { border-color: rgba(255,255,255,0.1) !important; margin: 20px 0 !important; 
 .parsing-status.error-text {
     color: #f87171;
 }
+
+/* Scoped flex stretching rules for dashboard cards to remain equal-height */
+.ats-dashboard [data-testid="stHorizontalBlock"],
+.ji-dashboard [data-testid="stHorizontalBlock"] {
+    align-items: stretch !important;
+    margin-bottom: 1rem !important;
+}
+
+.ats-dashboard [data-testid="stColumn"],
+.ji-dashboard [data-testid="stColumn"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.ats-dashboard [data-testid="stColumn"] > div,
+.ji-dashboard [data-testid="stColumn"] > div {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.ats-dashboard [data-testid="stColumn"] [data-testid="stVerticalBlock"],
+.ji-dashboard [data-testid="stColumn"] [data-testid="stVerticalBlock"] {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.ats-dashboard [data-testid="stColumn"] [data-testid="stVerticalBlock"] > div,
+.ji-dashboard [data-testid="stColumn"] [data-testid="stVerticalBlock"] > div {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.ji-card, .dashboard-card {
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Zero out bottom margin only for cards within columns or flex rows */
+[data-testid="stColumn"] .dashboard-card,
+.ji-row .ji-card {
+    margin-bottom: 0 !important;
+}
+
 

@@ -1,8 +1,10 @@
 import streamlit as st
+from dotenv import load_dotenv
 from utils import load_css
 from views.sidebar import render_sidebar
 
 # Initialize page config at the very beginning
+load_dotenv()
 st.set_page_config(page_title="ATSCraft", layout="wide")
 
 # Initialize counts in session state early
@@ -29,6 +31,9 @@ elif active_page == "About":
 elif active_page == "Analysis":
     from views.analysis import render_analysis
     render_analysis()
+elif active_page == "JobInsights":
+    from views.job_insights import render_job_insights
+    render_job_insights()
 else:
     st.markdown(f"<h2>{active_page}</h2>", unsafe_allow_html=True)
     st.info("This section is under development.")

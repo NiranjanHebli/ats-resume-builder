@@ -19,15 +19,45 @@ def render_contact_info():
         phone = r1c2.text_input(
             "Phone", placeholder="+1 555-555-5555", key="contact_phone"
         )
-        r2c1, r2c2 = st.columns(2)
+        r2c1, _ = st.columns(2)
         location = r2c1.text_input(
             "Location", placeholder="City, State", key="contact_location"
         )
-        links = r2c2.text_input(
-            "Links", placeholder="linkedin.com/in/jane", key="contact_links"
-        )
         name = f"{first_name} {last_name}".strip()
-        return name, phone, email, location, links
+        return name, phone, email, location
+
+
+def render_profiles():
+    with st.expander("PROFILES (e.g. LinkedIn, GitHub)", expanded=True):
+        profiles = []
+        if "prof_count" not in st.session_state:
+            st.session_state.prof_count = 1
+
+        for i in range(st.session_state.prof_count):
+            st.markdown(f"**Profile {i + 1}**")
+            c1, c2 = st.columns(2)
+            name = c1.text_input("Profile Name (e.g. LinkedIn)", key=f"prof_name_{i}")
+            link = c2.text_input("URL (e.g. https://linkedin.com/...)", key=f"prof_link_{i}")
+            profiles.append({"name": name, "link": link})
+
+        pb1, pb2 = st.columns(2)
+        pb1.button(
+            "Add Another Profile",
+            on_click=lambda: st.session_state.update(
+                prof_count=st.session_state.prof_count + 1
+            ),
+            key="btn_add_prof",
+        )
+        if st.session_state.prof_count > 1:
+            pb2.button(
+                "Remove Last Profile",
+                on_click=lambda: st.session_state.update(
+                    prof_count=st.session_state.prof_count - 1
+                ),
+                key="btn_rem_prof",
+            )
+
+    return profiles
 
 
 def render_summary():
@@ -53,7 +83,7 @@ def render_experience_section():
             c3, c4 = st.columns(2)
             title = c3.text_input("Job Title", key=f"exp_title_{i}")
             dates = c4.text_input(
-                "Dates (e.g. Month Year - Month Year)", key=f"exp_dates_{i}"
+                "Dates", placeholder="e.g. Month Year - Month Year", key=f"exp_dates_{i}"
             )
             bullets = st.text_area(
                 "Bullet Points (one per line)", height=100, key=f"exp_bull_{i}"
@@ -170,11 +200,13 @@ def render_projects():
         for i in range(st.session_state.proj_count):
             st.markdown(f"**Project {i + 1}**")
             title = st.text_input("Project Title", key=f"proj_title_{i}")
-            dates = st.text_input("Dates", key=f"proj_dates_{i}")
+            c1, c2 = st.columns(2)
+            dates = c1.text_input("Dates", key=f"proj_dates_{i}")
+            link = c2.text_input("Project Link (Optional)", key=f"proj_link_{i}")
             bullets = st.text_area(
                 "Description (one point per line)", height=80, key=f"proj_desc_{i}"
             )
-            projects.append({"title": title, "dates": dates, "bullets": bullets})
+            projects.append({"title": title, "dates": dates, "bullets": bullets, "link": link})
 
         pb1, pb2 = st.columns(2)
         pb1.button(
@@ -225,7 +257,7 @@ def render_preview_pane(
     phone,
     email,
     location,
-    links,
+    profiles,
     summary,
     objective,
     experiences,
@@ -247,7 +279,7 @@ def render_preview_pane(
                 "Email": email,
                 "Phone": phone,
                 "Location": location,
-                "Links": links,
+                "Profiles": profiles,
             },
             "Summary": summary,
             "Objective": objective,
@@ -269,7 +301,7 @@ def render_preview_pane(
             st.session_state.preview_page_count = len(doc)
             for page in doc:
                 pix = page.get_pixmap(dpi=180)
-                st.image(pix.tobytes("png"), use_container_width=True)
+                st.image(pix.tobytes("png"), width="stretch")
             doc.close()
 
             with open(output_pdf, "rb") as f:
@@ -287,5 +319,9 @@ def render_preview_pane(
                 pdoc = fitz.open(tpath)
                 for page in pdoc:
                     pix = page.get_pixmap(dpi=180)
-                    st.image(pix.tobytes("png"), use_container_width=True)
+                    st.image(pix.tobytes("png"), width="stretch")
                 pdoc.close()
+            else:
+                st.info("ℹ No static sample preview file is available for this template. Please use the **Live Preview** tab to view your generated resume.")
+        else:
+            st.info("ℹ The **Default** template does not have a static sample template. Please switch to the **Live Preview** tab to view your dynamically generated resume.")

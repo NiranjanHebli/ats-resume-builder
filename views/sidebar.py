@@ -3,6 +3,10 @@ import os
 import streamlit as st
 
 def render_sidebar():
+    # Initialize active page in session state from query params on first run
+    if "active_page" not in st.session_state:
+        st.session_state.active_page = st.query_params.get("page", "Editor")
+
     with st.sidebar:
         logo_b64 = ""
         logo_file = "assets/logo.png"
@@ -20,12 +24,7 @@ def render_sidebar():
             </div>
             """
 
-        active_page = st.query_params.get("page", "Editor")
-        editor_active = "active" if active_page == "Editor" else ""
-        templates_active = "active" if active_page == "Templates" else ""
-        analysis_active = "active" if active_page == "Analysis" else ""
-        job_insights_active = "active" if active_page == "JobInsights" else ""
-        about_active = "active" if active_page == "About" else ""
+        active_page = st.session_state.active_page
 
         sidebar_html = f"""<style>
 .sidebar-container {{
@@ -76,36 +75,52 @@ def render_sidebar():
     font-weight: 500;
     margin-top: 2px;
 }}
-.nav-item {{
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    color: #94a3b8;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
+
+/* Custom styled Streamlit buttons to avoid full browser reload */
+[data-testid="stSidebar"] .stButton > button {{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 12px 16px !important;
+    margin-bottom: 8px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-align: left !important;
+    width: 100% !important;
+    transition: background-color 0.2s, color 0.2s !important;
+    border: none !important;
+    height: auto !important;
+    box-shadow: none !important;
+    outline: none !important;
 }}
-.nav-item:hover {{
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #f8fafc;
+
+/* Secondary (Inactive) style override */
+[data-testid="stSidebar"] .stButton > button[data-testid="baseButton-secondary"] {{
+    background-color: transparent !important;
+    color: #94a3b8 !important;
+    border: none !important;
+    box-shadow: none !important;
 }}
-.nav-item.active {{
-    background-color: #1e293b;
-    color: #f8fafc;
-    cursor: default;
+[data-testid="stSidebar"] .stButton > button[data-testid="baseButton-secondary"]:hover {{
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #f8fafc !important;
+    border: none !important;
+    box-shadow: none !important;
 }}
-.nav-icon {{
-    margin-right: 14px;
-    font-size: 1.1rem;
-    opacity: 0.8;
+
+/* Primary (Active) style override */
+[data-testid="stSidebar"] .stButton > button[data-testid="baseButton-primary"] {{
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border: none !important;
+    box-shadow: none !important;
 }}
-.nav-item.active .nav-icon {{
-    opacity: 1;
-    color: #60a5fa;
+[data-testid="stSidebar"] .stButton > button[data-testid="baseButton-primary"]:hover {{
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border: none !important;
+    box-shadow: none !important;
 }}
 </style>
 
@@ -113,23 +128,28 @@ def render_sidebar():
     <div class="brand-container">
         {brand_html}
     </div>
-    
-    <a href="/?page=Editor" target="_self" class="nav-item {editor_active}">
-        <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></span> Editor
-    </a>
-    <a href="/?page=Templates" target="_self" class="nav-item {templates_active}">
-        <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg></span> Templates
-    </a>
-    <a href="/?page=Analysis" target="_self" class="nav-item {analysis_active}">
-        <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg></span> Analysis
-    </a>
-    <a href="/?page=JobInsights" target="_self" class="nav-item {job_insights_active}">
-        <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" /></svg></span> Job Insights
-    </a>
-    <a href="/?page=About" target="_self" class="nav-item {about_active}">
-        <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 1 1 .718 1.316l-.041.02a.75.75 0 0 1-.718-1.316zm.18 5.625l-.041-.02a.75.75 0 0 1-.718-1.316l.041.02a.75.75 0 1 1 .718 1.316zM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg></span> About
-    </a>
 </div>
 """
-        st.html(sidebar_html)
-    return active_page, brand_html
+        st.markdown(sidebar_html, unsafe_allow_html=True)
+
+        if st.button("Editor", type="primary" if active_page == "Editor" else "secondary", use_container_width=True):
+            st.session_state.active_page = "Editor"
+            st.query_params["page"] = "Editor"
+            st.rerun()
+
+        if st.button("Analysis", type="primary" if active_page == "Analysis" else "secondary", use_container_width=True):
+            st.session_state.active_page = "Analysis"
+            st.query_params["page"] = "Analysis"
+            st.rerun()
+
+        if st.button("Job Insights", type="primary" if active_page == "JobInsights" else "secondary", use_container_width=True):
+            st.session_state.active_page = "JobInsights"
+            st.query_params["page"] = "JobInsights"
+            st.rerun()
+
+        if st.button("About", type="primary" if active_page == "About" else "secondary", use_container_width=True):
+            st.session_state.active_page = "About"
+            st.query_params["page"] = "About"
+            st.rerun()
+
+    return st.session_state.active_page, brand_html
