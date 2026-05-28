@@ -88,7 +88,7 @@ def render_analysis():
         if not api_key:
             st.error("🔑 **Missing Groq API Key:** Please set `GROQ_API_KEY` in your `.env` file to enable dynamic analysis.")
         st.markdown("### Analysis Settings")
-        job_title = st.text_input("Target Job Title", value="Senior Frontend Developer")
+        job_title = st.text_input("Target Job Title", value="", placeholder="e.g. Software Engineer")
         job_description = st.text_area("Job Description", placeholder="Paste the job description here...", height=150)
         
         st.markdown("### Upload Resume")

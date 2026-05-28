@@ -8,9 +8,20 @@
 
 ATSCraft is a comprehensive, ATS-optimized resume builder and job description analyzer designed to bridge the gap between job seekers and Applicant Tracking Systems (ATS).
 
+---
+
+## Live Demo & Deployment
+
+Experience the full capabilities of ATSCraft directly in your browser, with no local setup required. 
+
+🌐 **[Launch ATSCraft Web App](https://ats-resume-builder-with-llm.streamlit.app/?page=Editor)** 
 
 ---
 
+## App Interface Preview 
+
+
+---
 ## Problem Statement
 
 Most modern companies use Applicant Tracking Systems (ATS) to filter out resumes before they ever reach a human recruiter. Up to 75% of resumes are rejected due to formatting issues, missing keywords, or misalignment with the job description. Job seekers struggle to identify these gaps and optimize their profiles for specific roles without manual, tedious tailoring.
