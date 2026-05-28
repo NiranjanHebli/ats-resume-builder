@@ -203,7 +203,7 @@ def render_job_insights():
         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/>
     </svg>
     <h2 style="color:#f8fafc; font-size:1.6rem; margin-bottom:.6rem;">No Analysis Yet</h2>
-    <p style="color:#94a3b8; max-width:380px; line-height:1.6;">Fill in your Groq API key, job title, and job description above, then click <strong style="color:#60a5fa;">Analyse Job</strong>.</p>
+    <p style="color:#94a3b8; max-width:380px; line-height:1.6;">Fill in the job title and job description above, then click <strong style="color:#60a5fa;">Analyse Job</strong>.</p>
 </div>
 </div>
 """, unsafe_allow_html=True)

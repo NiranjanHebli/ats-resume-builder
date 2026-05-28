@@ -28,13 +28,50 @@ def render_editor():
     col1, col2 = st.columns([1, 1], gap="large")
 
     with col1:
-        st.markdown("### Template")
-        selected_template = st.selectbox(
-            "template_select",
-            templates if templates else ["Default"],
-            format_func=lambda x: TEMPLATE_NAMES.get(x, x),
-            label_visibility="collapsed",
-        )
+        # Template & Import Row
+        t_col, i_col = st.columns([1, 1])
+        with t_col:
+            st.markdown("### Template")
+            selected_template = st.selectbox(
+                "template_select",
+                templates if templates else ["Default"],
+                format_func=lambda x: TEMPLATE_NAMES.get(x, x),
+                label_visibility="collapsed",
+            )
+        
+        with i_col:
+            st.markdown("### Import Resume")
+            with st.popover("Upload Resume", use_container_width=True):
+                uploaded_resume = st.file_uploader(
+                    "Upload existing resume to autofill",
+                    type=["pdf", "docx"],
+                    label_visibility="collapsed"
+                )
+
+        # Handle import if a new file is uploaded
+        if uploaded_resume is not None:
+            if "last_uploaded_resume" not in st.session_state or st.session_state.last_uploaded_resume != uploaded_resume.name:
+                from dotenv import load_dotenv
+                load_dotenv()
+                groq_api_key = os.getenv("GROQ_API_KEY")
+                
+                if not groq_api_key:
+                    st.error("GROQ_API_KEY is missing from .env file.")
+                else:
+                    with st.spinner("Extracting resume details..."):
+                        try:
+                            from resume_parser import extract_text_from_upload, parse_resume_with_groq, fill_session_state
+                            
+                            file_bytes = uploaded_resume.read()
+                            text = extract_text_from_upload(file_bytes, uploaded_resume.name)
+                            parsed_data = parse_resume_with_groq(text, groq_api_key)
+                            
+                            fill_session_state(parsed_data)
+                            st.session_state.last_uploaded_resume = uploaded_resume.name
+                            st.success("Resume imported successfully!")
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed to parse resume: {e}")
 
         if (
             "prev_template" not in st.session_state

@@ -8,6 +8,7 @@ def render_sidebar():
         st.session_state.active_page = st.query_params.get("page", "Editor")
 
     with st.sidebar:
+            
         logo_b64 = ""
         logo_file = "assets/logo.png"
         if os.path.exists(logo_file):
@@ -66,12 +67,12 @@ def render_sidebar():
 .brand-title {{
     font-size: 1.25rem;
     font-weight: 700;
-    color: #f8fafc;
+    color: var(--text-main);
     line-height: 1.2;
 }}
 .brand-subtitle {{
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-weight: 500;
     margin-top: 2px;
 }}
@@ -98,27 +99,21 @@ def render_sidebar():
 /* Secondary (Inactive) style override */
 [data-testid="stSidebar"] .stButton > button[data-testid="baseButton-secondary"] {{
     background-color: transparent !important;
-    color: #94a3b8 !important;
+    color: var(--text-muted) !important;
     border: none !important;
     box-shadow: none !important;
 }}
 [data-testid="stSidebar"] .stButton > button[data-testid="baseButton-secondary"]:hover {{
     background-color: rgba(255, 255, 255, 0.05) !important;
-    color: #f8fafc !important;
+    color: var(--text-main) !important;
     border: none !important;
     box-shadow: none !important;
 }}
 
 /* Primary (Active) style override */
 [data-testid="stSidebar"] .stButton > button[data-testid="baseButton-primary"] {{
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
-    border: none !important;
-    box-shadow: none !important;
-}}
-[data-testid="stSidebar"] .stButton > button[data-testid="baseButton-primary"]:hover {{
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
+    background-color: var(--input-bg) !important;
+    color: var(--text-main) !important;
     border: none !important;
     box-shadow: none !important;
 }}
@@ -137,7 +132,7 @@ def render_sidebar():
             st.query_params["page"] = "Editor"
             st.rerun()
 
-        if st.button("Analysis", type="primary" if active_page == "Analysis" else "secondary", use_container_width=True):
+        if st.button("Resume Analyzer", type="primary" if active_page == "Analysis" else "secondary", use_container_width=True):
             st.session_state.active_page = "Analysis"
             st.query_params["page"] = "Analysis"
             st.rerun()
@@ -151,5 +146,6 @@ def render_sidebar():
             st.session_state.active_page = "About"
             st.query_params["page"] = "About"
             st.rerun()
+            
 
     return st.session_state.active_page, brand_html

@@ -269,48 +269,59 @@ def render_preview_pane(
     selected_template,
     templates_dir,
 ):
-    st.markdown("### Preview")
+    user_details = {
+        "Contact": {
+            "Name": name,
+            "Email": email,
+            "Phone": phone,
+            "Location": location,
+            "Profiles": profiles,
+        },
+        "Summary": summary,
+        "Objective": objective,
+        "Experience": [
+            e for e in experiences if e["company"] or e["title"]
+        ],
+        "Projects": [p for p in projects if p["title"]],
+        "Education": [e for e in educations if e["school"] or e["degree"]],
+        "Skills": skills,
+        "Certifications": certifications,
+        "Interests": interests,
+    }
+
+    output_pdf = "generated_resume.pdf"
+    generate_pdf(output_pdf, user_details, selected_template)
+
+    # Read PDF bytes once
+    pdf_bytes = None
+    if os.path.exists(output_pdf):
+        with open(output_pdf, "rb") as f:
+            pdf_bytes = f.read()
+
+    # Header row: PREVIEW label left, Download button right
+    col_label, col_btn = st.columns([3, 1])
+    with col_label:
+        st.markdown('<p class="preview-section-label">PREVIEW</p>', unsafe_allow_html=True)
+    with col_btn:
+        if pdf_bytes is not None:
+            st.download_button(
+                "⬇ Download PDF",
+                pdf_bytes,
+                "My_Resume.pdf",
+                "application/pdf",
+                key="dl_pdf_btn",
+            )
+
     tab1, tab2 = st.tabs(["Live Preview", "Template Sample"])
 
     with tab1:
-        user_details = {
-            "Contact": {
-                "Name": name,
-                "Email": email,
-                "Phone": phone,
-                "Location": location,
-                "Profiles": profiles,
-            },
-            "Summary": summary,
-            "Objective": objective,
-            "Experience": [
-                e for e in experiences if e["company"] or e["title"]
-            ],
-            "Projects": [p for p in projects if p["title"]],
-            "Education": [e for e in educations if e["school"] or e["degree"]],
-            "Skills": skills,
-            "Certifications": certifications,
-            "Interests": interests,
-        }
-
-        output_pdf = "generated_resume.pdf"
-        generate_pdf(output_pdf, user_details, selected_template)
-
         if os.path.exists(output_pdf):
             doc = fitz.open(output_pdf)
             st.session_state.preview_page_count = len(doc)
             for page in doc:
                 pix = page.get_pixmap(dpi=180)
-                st.image(pix.tobytes("png"), width="stretch")
+                st.image(pix.tobytes("png"), use_container_width=True)
             doc.close()
-
-            with open(output_pdf, "rb") as f:
-                st.download_button(
-                    "Download Resume (PDF)",
-                    f,
-                    "My_Resume.pdf",
-                    "application/pdf",
-                )
 
     with tab2:
         if selected_template and selected_template != "Default":
@@ -319,9 +330,11 @@ def render_preview_pane(
                 pdoc = fitz.open(tpath)
                 for page in pdoc:
                     pix = page.get_pixmap(dpi=180)
-                    st.image(pix.tobytes("png"), width="stretch")
+                    st.image(pix.tobytes("png"), use_container_width=True)
                 pdoc.close()
             else:
                 st.info("ℹ No static sample preview file is available for this template. Please use the **Live Preview** tab to view your generated resume.")
         else:
             st.info("ℹ The **Default** template does not have a static sample template. Please switch to the **Live Preview** tab to view your dynamically generated resume.")
+
+
