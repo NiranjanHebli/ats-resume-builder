@@ -96,8 +96,11 @@ def render_analysis():
 
     # Process file upload
     analysis_data = None
+    missing_inputs = False
     if uploaded_file:
-        if api_key:
+        if not job_title.strip() or not job_description.strip():
+            missing_inputs = True
+        elif api_key:
             with st.spinner("Analyzing resume with Groq..."):
                 file_bytes = uploaded_file.getvalue()
                 if uploaded_file.name.endswith(".pdf"):
@@ -142,7 +145,19 @@ def render_analysis():
             }
 
     with col_rest:
-        if not analysis_data:
+        if missing_inputs:
+            st.markdown("""
+            <div class="dashboard-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 400px; padding: 3rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#facc15" style="width: 64px; height: 64px; margin-bottom: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <h2 style="color: #f8fafc; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem;">Missing Information</h2>
+                <p style="color: #94a3b8; font-size: 1rem; max-width: 400px; margin: 0 auto 1.5rem auto; line-height: 1.5;">
+                    Please provide both a <strong>Target Job Title</strong> and a <strong>Job Description</strong> in the settings panel to enable ATS Analysis.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        elif not analysis_data:
             # Show a beautiful placeholder card instructing the user to upload a file
             st.markdown("""
             <div class="dashboard-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 400px; padding: 3rem;">
