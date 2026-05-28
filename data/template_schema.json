@@ -4,7 +4,6 @@
     "has_line": false,
     "fields": [
       "contact",
-      "summary",
       "education",
       "experience",
       "skills"

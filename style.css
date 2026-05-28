@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-#MainMenu, footer, header   { visibility: hidden; }
+#MainMenu, footer, [data-testid="stDeployButton"], [data-testid="stDecoration"] { visibility: hidden; }
 
 .stApp {
     background:
@@ -82,4 +82,29 @@ hr { border-color: rgba(255,255,255,0.1) !important; margin: 20px 0 !important; 
 .stDownloadButton > button:hover {
     background    : linear-gradient(135deg, #047857, #059669) !important;
     color         : #fff !important;
+}
+
+/* Sidebar and Expander styling */
+[data-testid="stSidebar"] {
+    background-color: #0f172a !important;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+[data-testid="stExpander"] {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    margin-bottom: 12px;
+}
+
+[data-testid="stExpander"] > summary {
+    background-color: transparent !important;
+}
+
+[data-testid="stExpander"] > summary p {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
 }
