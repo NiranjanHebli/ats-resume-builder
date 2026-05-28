@@ -15,7 +15,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-SUPP = "/System/Library/Fonts/Supplemental"
+SUPP = os.path.join(os.path.dirname(__file__), "fonts")
 _FONT_FILES = {
     "TimesNewRoman": f"{SUPP}/Times New Roman.ttf",
     "TimesNewRoman-Bold": f"{SUPP}/Times New Roman Bold.ttf",
