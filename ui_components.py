@@ -252,6 +252,52 @@ def render_interests():
         return interests
 
 
+def render_custom_sections():
+    if "custom_sections_count" not in st.session_state:
+        st.session_state.custom_sections_count = 0
+
+    custom_sections = []
+    for i in range(st.session_state.custom_sections_count):
+        # We put a text input for title and a text area for the text box content
+        col_title, col_del = st.columns([4, 1])
+        with col_title:
+            st.markdown(f"**Custom Section {i + 1}**")
+        
+        section_name_key = f"custom_section_name_{i}"
+        section_content_key = f"custom_section_content_{i}"
+        
+        # Display the custom section inputs inside an expander
+        disp_name = st.session_state.get(section_name_key, "").strip() or f"Custom Section {i + 1}"
+        with st.expander(disp_name.upper(), expanded=True):
+            name = st.text_input("Section Title", key=section_name_key, placeholder="e.g. VOLUNTEER EXPERIENCE, PUBLICATIONS")
+            content = st.text_area("Content (supports bullet points/multiline)", key=section_content_key, placeholder="Enter section details here...", height=100)
+            custom_sections.append({"name": name, "content": content})
+
+    # Display dynamic +/- buttons at the end to add own section
+    col_add, col_rem = st.columns(2)
+    with col_add:
+        st.button(
+            "Add Section",
+            on_click=lambda: st.session_state.update(
+                custom_sections_count=st.session_state.custom_sections_count + 1
+            ),
+            key="btn_add_custom_sec",
+            use_container_width=True,
+        )
+    with col_rem:
+        if st.session_state.custom_sections_count > 0:
+            st.button(
+                "Remove Section",
+                on_click=lambda: st.session_state.update(
+                    custom_sections_count=max(0, st.session_state.custom_sections_count - 1)
+                ),
+                key="btn_rem_custom_sec",
+                use_container_width=True,
+            )
+
+    return custom_sections
+
+
 def render_preview_pane(
     name,
     phone,
@@ -266,6 +312,7 @@ def render_preview_pane(
     skills,
     certifications,
     interests,
+    custom_sections,
     selected_template,
     templates_dir,
 ):
@@ -287,6 +334,7 @@ def render_preview_pane(
         "Skills": skills,
         "Certifications": certifications,
         "Interests": interests,
+        "CustomSections": [cs for cs in custom_sections if cs["name"].strip()],
     }
 
     output_pdf = "generated_resume.pdf"

@@ -172,6 +172,42 @@ def create_row_table(left_para, right_para, doc_width):
     return t
 
 
+def append_custom_sections(story, user_details, heading_st, body_st, bullet_st, has_line=False, hr_space_before=2, hr_space_after=4):
+    custom_sections = user_details.get("CustomSections", [])
+    for section in custom_sections:
+        name = section.get("name", "").strip()
+        content = section.get("content", "").strip()
+        if name:
+            story.append(Paragraph(sanitize(name), heading_st))
+            if has_line:
+                story.append(
+                    HRFlowable(
+                        width="100%",
+                        thickness=0.6,
+                        color=black,
+                        spaceAfter=hr_space_after,
+                        spaceBefore=hr_space_before,
+                    )
+                )
+            if content:
+                for line in content.split("\n"):
+                    line = line.strip()
+                    if not line:
+                        continue
+                    # Handle bullet points
+                    is_bullet = False
+                    for prefix in ("- ", "* ", "• ", "-", "*", "•", "▪", "■"):
+                        if line.startswith(prefix):
+                            line = line[len(prefix) :].strip()
+                            is_bullet = True
+                            break
+                    if is_bullet:
+                        story.append(Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st))
+                    else:
+                        story.append(Paragraph(sanitize(line), body_st))
+            story.append(Spacer(1, 4))
+
+
 def generate_pdf(
     output_path: str,
     user_details: dict,
@@ -384,6 +420,8 @@ def render_template_1(doc, story, user_details, spec, doc_width):
                 story.append(Paragraph(sanitize(line.strip()), title_st))
         story.append(Spacer(1, 4))
 
+    append_custom_sections(story, user_details, heading_st, title_st, bullet_st, has_line=False)
+
     doc.build(story)
 
 
@@ -573,6 +611,8 @@ def render_template_2(doc, story, user_details, spec, doc_width):
                 )
         story.append(Spacer(1, 4))
 
+    append_custom_sections(story, user_details, heading_st, body_st, bullet_st, has_line=True)
+
     doc.build(story)
 
 
@@ -709,6 +749,8 @@ def render_template_3(doc, story, user_details, spec, doc_width):
 
             story.append(Paragraph(f"\u2022\u00a0{safe_line}", bullet_st))
         story.append(Spacer(1, 6))
+
+    append_custom_sections(story, user_details, heading_st, title_st, bullet_st, has_line=False)
 
     doc.build(story)
 
@@ -873,6 +915,8 @@ def render_template_4(doc, story, user_details, spec, doc_width):
             story.append(Paragraph(f"\u2022\u00a0{safe_line}", bullet_st))
         story.append(Spacer(1, 4))
 
+    append_custom_sections(story, user_details, heading_st, summary_st, bullet_st, has_line=False)
+
     doc.build(story)
 
 
@@ -1017,6 +1061,8 @@ def render_template_5(doc, story, user_details, spec, doc_width):
             if line:
                 story.append(Paragraph(sanitize(line), body_st))
         story.append(Spacer(1, 6))
+
+    append_custom_sections(story, user_details, heading_st, body_st, bullet_st, has_line=True, hr_space_before=2, hr_space_after=8)
 
     doc.build(story)
 
@@ -1201,5 +1247,8 @@ def render_template_generic(
                             Paragraph(sanitize(line.strip()), body_st)
                         )
                 story.append(Spacer(1, 4))
+
+    # Render any custom sections
+    append_custom_sections(story, user_details, heading_st, body_st, bullet_st, has_line=has_line)
 
     doc.build(story)

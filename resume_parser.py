@@ -1,8 +1,3 @@
-"""
-resume_parser.py
-Extracts structured resume data from uploaded PDF/DOCX files using Groq LLM.
-"""
-
 import io
 import json
 import os
@@ -13,18 +8,99 @@ from langchain_groq import ChatGroq
 
 
 def extract_text_from_upload(file_bytes: bytes, file_name: str) -> str:
-    """Extract plain text from a PDF or DOCX file."""
+    """Extract plain text from a PDF or DOCX file, putting hyperlinks inline."""
     ext = file_name.rsplit(".", 1)[-1].lower()
     if ext == "pdf":
         try:
             doc = fitz.open(stream=file_bytes, filetype="pdf")
-            return "\n".join(page.get_text() for page in doc)
+            full_text = []
+            for page in doc:
+                words = page.get_text("words")
+                links = page.get_links()
+                
+                uri_links = []
+                for lnk in links:
+                    if "uri" in lnk and "from" in lnk:
+                        uri_links.append((fitz.Rect(lnk["from"]), lnk["uri"]))
+                
+                lines = {}
+                for w in words:
+                    x0, y0, x1, y1, word, block_no, line_no, word_no = w
+                    key = (block_no, line_no)
+                    if key not in lines:
+                        lines[key] = []
+                    
+                    word_rect = fitz.Rect(x0, y0, x1, y1)
+                    matched_uri = None
+                    for link_rect, uri in uri_links:
+                        if word_rect.intersects(link_rect) or word_rect in link_rect:
+                            matched_uri = uri
+                            break
+                    lines[key].append((word, matched_uri))
+                
+                page_lines = []
+                for key in sorted(lines.keys()):
+                    words_in_line = lines[key]
+                    line_str = ""
+                    last_uri = None
+                    for word, uri in words_in_line:
+                        if uri and uri != last_uri:
+                            if last_uri:
+                                line_str += f" ({last_uri}) "
+                            line_str += f" {word}"
+                            last_uri = uri
+                        elif not uri and last_uri:
+                            line_str += f" ({last_uri}) {word}"
+                            last_uri = None
+                        else:
+                            line_str += f" {word}"
+                    if last_uri:
+                        line_str += f" ({last_uri}) "
+                    page_lines.append(line_str.strip())
+                
+                full_text.append("\n".join(page_lines))
+            return "\n".join(full_text)
         except Exception as e:
             raise RuntimeError(f"Failed to read PDF: {e}")
     elif ext in ("docx", "doc"):
         try:
             document = docx.Document(io.BytesIO(file_bytes))
-            return "\n".join(p.text for p in document.paragraphs if p.text.strip())
+            paragraphs_text = []
+            
+            # Extract paragraphs (including inline hyperlinks)
+            for para in document.paragraphs:
+                p_text = ""
+                for child in para._element:
+                    tag = child.tag.split("}")[-1]
+                    if tag == "r":
+                        text_elems = child.findall(".//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t")
+                        p_text += "".join(t.text for t in text_elems if t.text)
+                    elif tag == "hyperlink":
+                        rId = child.get("{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id")
+                        text_elems = child.findall(".//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t")
+                        link_text = "".join(t.text for t in text_elems if t.text)
+                        
+                        if rId and rId in para.part.rels:
+                            rel = para.part.rels[rId]
+                            url = getattr(rel, "target_ref", getattr(rel, "_target", ""))
+                            p_text += f" {link_text} ({url}) "
+                        else:
+                            p_text += f" {link_text} "
+                
+                if p_text.strip():
+                    paragraphs_text.append(p_text.strip())
+            
+            # Also get table text
+            for table in document.tables:
+                for row in table.rows:
+                    row_text = []
+                    for cell in row.cells:
+                        if cell.text.strip():
+                            row_text.append(cell.text.strip())
+                    if row_text:
+                        paragraphs_text.append(" | ".join(row_text))
+
+            return "\n".join(paragraphs_text)
         except Exception as e:
             raise RuntimeError(f"Failed to read DOCX: {e}")
     else:
@@ -86,6 +162,7 @@ Rules:
 - Skills: combine all skills into a single multi-line string (e.g. "Technical: Python, Java\\nLanguage: English")
 - Certifications: one per line
 - Bullets for experience/education/projects: one bullet per line, no leading dashes
+- Project link: If a project title or description has an associated hyperlink or URL inline or nearby, extract that URL and set it in the project's "link" field.
 - Profiles: only real URLs found in the resume
 - Do NOT invent data. Leave fields empty if not found.
 

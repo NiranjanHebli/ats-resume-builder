@@ -21,6 +21,12 @@ with open("data/sample_data.json") as f:
 
 
 def render_editor():
+    # Restore persistent editor state
+    if "editor_persistent_data" in st.session_state:
+        for k, v in st.session_state.editor_persistent_data.items():
+            if k not in st.session_state:
+                st.session_state[k] = v
+
     st.markdown(
         "<h2>ATSCraft</h2>",
         unsafe_allow_html=True,
@@ -47,6 +53,7 @@ def render_editor():
                     type=["pdf", "docx"],
                     label_visibility="collapsed"
                 )
+                st.caption("Supported: PDF, DOCX (Max 10MB)")
 
         # Handle import if a new file is uploaded
         if uploaded_resume is not None:
@@ -216,6 +223,10 @@ def render_editor():
 
                 interests = render_interests()
 
+            # Render custom sections at the very end
+            from ui_components import render_custom_sections
+            custom_sections = render_custom_sections()
+
     with col2:
         render_preview_pane(
             name=name,
@@ -231,6 +242,18 @@ def render_editor():
             skills=skills,
             certifications=certifications,
             interests=interests,
+            custom_sections=custom_sections,
             selected_template=selected_template,
             templates_dir=TEMPLATE_DIR,
         )
+
+    # Save persistent editor state
+    prefixes = (
+        "contact_", "prof_", "summary_", "obj_", "skills_", "cert_", "int_",
+        "exp_", "edu_", "proj_", "custom_section_"
+    )
+    backup = {}
+    for k, v in st.session_state.items():
+        if any(k.startswith(p) for p in prefixes) or k in ["prev_template", "exp_count", "edu_count", "proj_count", "prof_count", "custom_sections_count"]:
+            backup[k] = v
+    st.session_state.editor_persistent_data = backup
