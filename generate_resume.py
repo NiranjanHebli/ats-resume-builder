@@ -15,7 +15,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-SUPP = "/System/Library/Fonts/Supplemental"
+SUPP = os.path.join(os.path.dirname(__file__), "fonts")
 _FONT_FILES = {
     "TimesNewRoman": f"{SUPP}/Times New Roman.ttf",
     "TimesNewRoman-Bold": f"{SUPP}/Times New Roman Bold.ttf",
@@ -34,9 +34,38 @@ _FONT_FILES = {
     "Georgia-BoldItalic": f"{SUPP}/Georgia Bold Italic.ttf",
 }
 
+_REGISTERED_FONTS = set()
 for name, path in _FONT_FILES.items():
     if os.path.exists(path):
-        pdfmetrics.registerFont(TTFont(name, path))
+        try:
+            pdfmetrics.registerFont(TTFont(name, path))
+            _REGISTERED_FONTS.add(name)
+        except Exception:
+            pass
+
+_FONT_MAP = {
+    "timesnewroman": "Times-Roman",
+    "timesnewroman-bold": "Times-Bold",
+    "timesnewroman-italic": "Times-Italic",
+    "timesnewroman-bolditalic": "Times-BoldItalic",
+    "arial": "Helvetica",
+    "arial-bold": "Helvetica-Bold",
+    "arial-italic": "Helvetica-Oblique",
+    "arial-bolditalic": "Helvetica-BoldOblique",
+    "georgia": "Times-Roman",
+    "georgia-bold": "Times-Bold",
+    "georgia-italic": "Times-Italic",
+    "georgia-bolditalic": "Times-BoldItalic",
+    "trebuchetms": "Helvetica",
+    "trebuchetms-bold": "Helvetica-Bold",
+    "trebuchetms-italic": "Helvetica-Oblique",
+    "trebuchetms-bolditalic": "Helvetica-BoldOblique",
+}
+
+def _resolve_font(font_name: str) -> str:
+    if font_name in _REGISTERED_FONTS:
+        return font_name
+    return _FONT_MAP.get(font_name.lower(), "Helvetica")
 
 _JSON_PATH = os.path.join(os.path.dirname(__file__), "data", "template_fonts.json")
 with open(_JSON_PATH) as f:
@@ -83,6 +112,8 @@ def _style(role: str, spec: dict, **overrides) -> ParagraphStyle:
         if font not in _FONT_FILES:
             font = info["font"]
 
+    font = _resolve_font(font)
+
     kwargs = dict(
         fontName=font,
         fontSize=size,
@@ -99,6 +130,26 @@ def _style(role: str, spec: dict, **overrides) -> ParagraphStyle:
 def sanitize(text: str) -> str:
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     return text.encode("ascii", "ignore").decode("ascii")
+
+def format_profiles(profiles):
+    parts = []
+    for p in profiles:
+        name = sanitize(p.get("name", "").strip())
+        url = p.get("link", "").strip()
+        if name and url:
+            parts.append(f'<link href="{sanitize(url)}"><font color="blue">{name}</font></link>')
+        elif name:
+            parts.append(name)
+        elif url:
+            parts.append(f'<link href="{sanitize(url)}"><font color="blue">{sanitize(url)}</font></link>')
+    return parts
+
+def format_project_title(title, link):
+    safe_title = sanitize(title.strip())
+    safe_link = link.strip()
+    if safe_title and safe_link:
+        return f'<link href="{sanitize(safe_link)}"><font color="blue">{safe_title}</font></link>'
+    return safe_title
 
 
 def create_row_table(left_para, right_para, doc_width):
@@ -134,7 +185,7 @@ def generate_pdf(
         or contact.get("Email")
         or contact.get("Phone")
         or contact.get("Location")
-        or contact.get("Links")
+        or contact.get("Profiles")
     ):
         has_content = True
     if user_details.get("Summary"):
@@ -159,7 +210,7 @@ def generate_pdf(
                 "Email": "jane.doe@example.com",
                 "Phone": "+1 (555) 555-5555",
                 "Location": "San Francisco, CA",
-                "Links": "linkedin.com/in/janedoe",
+                "Profiles": [{"name": "LinkedIn", "link": "https://linkedin.com/in/janedoe"}],
             },
             "Summary": "Highly motivated Software Engineer with 5+ years of experience building scalable web applications. Proficient in Python, database optimization, and cloud architecture, with a passion for writing clean, maintainable code.",
             "Experience": [
@@ -255,11 +306,13 @@ def render_template_1(doc, story, user_details, spec, doc_width):
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
     location = contact.get("Location", "")
-    links = contact.get("Links", "")
+    profiles = contact.get("Profiles", [])
     story.append(Paragraph(sanitize(name), name_st))
-    c_parts = [p.strip() for p in [location, phone, email, links] if p.strip()]
+    
+    c_parts = [sanitize(p.strip()) for p in [location, phone, email] if p.strip()]
+    c_parts.extend(format_profiles(profiles))
     if c_parts:
-        story.append(Paragraph(sanitize(" | ".join(c_parts)), contact_st))
+        story.append(Paragraph(" | ".join(c_parts), contact_st))
 
     education = user_details.get("Education", [])
     if education:
@@ -287,6 +340,29 @@ def render_template_1(doc, story, user_details, spec, doc_width):
             story.append(create_row_table(tit_p, dat_p, doc_width))
 
             bullets = exp.get("bullets", "")
+            for line in bullets.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                for prefix in ("- ", "* ", "• ", "-", "*", "•"):
+                    if line.startswith(prefix):
+                        line = line[len(prefix) :].strip()
+                        break
+                story.append(
+                    Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st)
+                )
+            story.append(Spacer(1, 6))
+
+    projects = user_details.get("Projects", [])
+    if projects:
+        story.append(Paragraph("Projects", heading_st))
+        for proj in projects:
+            title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+            tit_p = Paragraph(title_text, job_title_st)
+            dat_p = Paragraph(sanitize(proj.get("dates", "")), title_right_st)
+            story.append(create_row_table(tit_p, dat_p, doc_width))
+
+            bullets = proj.get("bullets", "")
             for line in bullets.split("\n"):
                 line = line.strip()
                 if not line:
@@ -374,11 +450,13 @@ def render_template_2(doc, story, user_details, spec, doc_width):
     name = contact.get("Name", "Your Name")
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
+    profiles = contact.get("Profiles", [])
 
     story.append(Paragraph(sanitize(name), name_st))
-    c_parts = [p.strip() for p in [email, phone] if p.strip()]
+    c_parts = [sanitize(p.strip()) for p in [email, phone] if p.strip()]
+    c_parts.extend(format_profiles(profiles))
     if c_parts:
-        story.append(Paragraph(sanitize(" \u2022 ".join(c_parts)), contact_st))
+        story.append(Paragraph(" \u2022 ".join(c_parts), contact_st))
 
     education = user_details.get("Education", [])
     if education:
@@ -448,6 +526,29 @@ def render_template_2(doc, story, user_details, spec, doc_width):
                     Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st)
                 )
             story.append(Spacer(1, 6))
+            
+    projects = user_details.get("Projects", [])
+    if projects:
+        append_heading("Projects")
+        for proj in projects:
+            title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+            tit_p = Paragraph(title_text, title_st)
+            dat_p = Paragraph(sanitize(proj.get("dates", "")), org_right_st)
+            story.append(create_row_table(tit_p, dat_p, doc_width))
+
+            bullets = proj.get("bullets", "")
+            for line in bullets.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                for prefix in ("- ", "* ", "• ", "-", "*", "•"):
+                    if line.startswith(prefix):
+                        line = line[len(prefix) :].strip()
+                        break
+                story.append(
+                    Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st)
+                )
+            story.append(Spacer(1, 6))
 
     certifications = user_details.get("Certifications", "").strip()
     if certifications:
@@ -500,14 +601,16 @@ def render_template_3(doc, story, user_details, spec, doc_width):
     name = contact.get("Name", "Your Name")
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
-    links = contact.get("Links", "")
+    profiles = contact.get("Profiles", [])
 
     story.append(Paragraph(sanitize(name), name_st))
-    c_parts = [p.strip() for p in [email, phone] if p.strip()]
+    c_parts = [sanitize(p.strip()) for p in [email, phone] if p.strip()]
     if c_parts:
-        story.append(Paragraph(sanitize(" | ".join(c_parts)), contact_st))
-    if links:
-        story.append(Paragraph(sanitize(links), contact_st))
+        story.append(Paragraph(" | ".join(c_parts), contact_st))
+        
+    p_parts = format_profiles(profiles)
+    if p_parts:
+        story.append(Paragraph(" | ".join(p_parts), contact_st))
 
     story.append(
         HRFlowable(
@@ -569,6 +672,29 @@ def render_template_3(doc, story, user_details, spec, doc_width):
                 )
             story.append(Spacer(1, 6))
 
+    projects = user_details.get("Projects", [])
+    if projects:
+        append_heading("PROJECTS")
+        for proj in projects:
+            title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+            tit_p = Paragraph(title_text, title_st)
+            dat_p = Paragraph(sanitize(proj.get("dates", "")), org_right_st)
+            story.append(create_row_table(tit_p, dat_p, doc_width))
+
+            bullets = proj.get("bullets", "")
+            for line in bullets.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                for prefix in ("- ", "* ", "• ", "-", "*", "•"):
+                    if line.startswith(prefix):
+                        line = line[len(prefix) :].strip()
+                        break
+                story.append(
+                    Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st)
+                )
+            story.append(Spacer(1, 6))
+
     interests = user_details.get("Interests", "").strip()
     if interests:
         append_heading("VOLUNTEER EXPERIENCE")
@@ -614,11 +740,13 @@ def render_template_4(doc, story, user_details, spec, doc_width):
     name = contact.get("Name", "Your Name")
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
+    profiles = contact.get("Profiles", [])
 
     story.append(Paragraph(sanitize(name), name_st))
-    c_parts = [p.strip() for p in [phone, email] if p.strip()]
+    c_parts = [sanitize(p.strip()) for p in [phone, email] if p.strip()]
+    c_parts.extend(format_profiles(profiles))
     if c_parts:
-        story.append(Paragraph(sanitize(" / ".join(c_parts)), contact_st))
+        story.append(Paragraph(" / ".join(c_parts), contact_st))
 
     story.append(
         HRFlowable(
@@ -662,6 +790,29 @@ def render_template_4(doc, story, user_details, spec, doc_width):
             story.append(create_row_table(tit_p, dat_p, doc_width))
 
             bullets = exp.get("bullets", "")
+            for line in bullets.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                for prefix in ("- ", "* ", "• ", "-", "*", "•"):
+                    if line.startswith(prefix):
+                        line = line[len(prefix) :].strip()
+                        break
+                story.append(
+                    Paragraph(f"\u2022\u00a0{sanitize(line)}", bullet_st)
+                )
+            story.append(Spacer(1, 4))
+            
+    projects = user_details.get("Projects", [])
+    if projects:
+        append_heading("Projects")
+        for proj in projects:
+            title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+            tit_p = Paragraph(title_text, title_st)
+            dat_p = Paragraph(sanitize(proj.get("dates", "")), title_right_st)
+            story.append(create_row_table(tit_p, dat_p, doc_width))
+
+            bullets = proj.get("bullets", "")
             for line in bullets.split("\n"):
                 line = line.strip()
                 if not line:
@@ -761,13 +912,15 @@ def render_template_5(doc, story, user_details, spec, doc_width):
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
     location = contact.get("Location", "")
+    profiles = contact.get("Profiles", [])
 
     story.append(Paragraph(sanitize(name), name_st))
     if location:
         story.append(Paragraph(sanitize(location), contact_st))
-    c_parts = [p.strip() for p in [email, phone] if p.strip()]
+    c_parts = [sanitize(p.strip()) for p in [email, phone] if p.strip()]
+    c_parts.extend(format_profiles(profiles))
     if c_parts:
-        story.append(Paragraph(sanitize(" \u2022 ".join(c_parts)), contact_st))
+        story.append(Paragraph(" \u2022 ".join(c_parts), contact_st))
 
     story.append(Spacer(1, 4))
 
@@ -824,6 +977,29 @@ def render_template_5(doc, story, user_details, spec, doc_width):
                 )
             story.append(Spacer(1, 6))
 
+    projects = user_details.get("Projects", [])
+    if projects:
+        append_heading("Projects")
+        for proj in projects:
+            title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+            tit_p = Paragraph(title_text, title_st)
+            dat_p = Paragraph(sanitize(proj.get("dates", "")), title_right_st)
+            story.append(create_row_table(tit_p, dat_p, doc_width))
+
+            bullets = proj.get("bullets", "")
+            for line in bullets.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                for prefix in ("- ", "* ", "• ", "-", "*", "•", "▪", "■"):
+                    if line.startswith(prefix):
+                        line = line[len(prefix) :].strip()
+                        break
+                story.append(
+                    Paragraph(f"\u25aa\u00a0\u00a0{sanitize(line)}", bullet_st)
+                )
+            story.append(Spacer(1, 6))
+
     skills = user_details.get("Skills", "").strip()
     if skills:
         append_heading("Technical Expertise")
@@ -863,11 +1039,13 @@ def render_template_generic(
     email = contact.get("Email", "")
     phone = contact.get("Phone", "")
     location = contact.get("Location", "")
-    links = contact.get("Links", "")
+    profiles = contact.get("Profiles", [])
+    
     story.append(Paragraph(sanitize(name), name_st))
-    c_parts = [p.strip() for p in [location, phone, email, links] if p.strip()]
+    c_parts = [sanitize(p.strip()) for p in [location, phone, email] if p.strip()]
+    c_parts.extend(format_profiles(profiles))
     if c_parts:
-        story.append(Paragraph(sanitize("  |  ".join(c_parts)), contact_st))
+        story.append(Paragraph("  |  ".join(c_parts), contact_st))
 
     schema = TEMPLATE_SCHEMA.get(
         template_choice, TEMPLATE_SCHEMA.get("default", {})
@@ -954,9 +1132,8 @@ def render_template_generic(
             if projects:
                 append_heading("PROJECTS")
                 for proj in projects:
-                    tit_p = Paragraph(
-                        sanitize(proj.get("title", "")), title_st
-                    )
+                    title_text = format_project_title(proj.get("title", ""), proj.get("link", ""))
+                    tit_p = Paragraph(title_text, title_st)
                     dat_p = Paragraph(
                         sanitize(proj.get("dates", "")), title_right_st
                     )

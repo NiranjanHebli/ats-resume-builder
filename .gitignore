@@ -150,4 +150,7 @@ Thumbs.db
 
 # Generated PDFs and Resume Output backups
 *.pdf
+!templates/*.pdf
 backup_templates_v2/
+.ruff_cache/
+to-do/
