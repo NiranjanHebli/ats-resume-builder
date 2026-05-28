@@ -108,3 +108,153 @@ hr { border-color: rgba(255,255,255,0.1) !important; margin: 20px 0 !important; 
     color: #94a3b8;
     letter-spacing: 0.5px;
 }
+
+/* ATS Analyzer Dashboard Styling */
+.ats-dashboard {
+    font-family: 'Inter', sans-serif;
+    color: #f8fafc;
+}
+.ats-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.ats-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+.dashboard-card {
+    background-color: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+.card-header {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+.upload-box {
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background-color: rgba(15, 23, 42, 0.3);
+    transition: all 0.2s ease;
+}
+.upload-box:hover {
+    border-color: rgba(255,255,255,0.3);
+    background-color: rgba(15, 23, 42, 0.5);
+}
+.upload-icon {
+    font-size: 2.5rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+.score-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.score-circle {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    border: 12px solid rgba(255,255,255,0.05);
+}
+.score-value {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #f8fafc;
+}
+.score-label {
+    font-size: 1rem;
+    color: #4ade80;
+    font-weight: 600;
+    margin-top: 5px;
+}
+.quick-win-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+.quick-win-icon {
+    margin-right: 12px;
+    margin-top: 3px;
+}
+.quick-win-content h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+    color: #f8fafc;
+    font-weight: 600;
+}
+.quick-win-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+.keyword-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #cbd5e1;
+}
+.keyword-pill.missing {
+    opacity: 0.5;
+}
+.parsing-check-container {
+    display: flex;
+    gap: 15px;
+}
+.parsing-box {
+    flex: 1;
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.parsing-box.error {
+    border-color: rgba(248, 113, 113, 0.3);
+}
+.parsing-icon {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.parsing-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f8fafc;
+    margin-bottom: 5px;
+}
+.parsing-status {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+.parsing-status.error-text {
+    color: #f87171;
+}
+

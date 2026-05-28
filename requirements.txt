@@ -1,3 +1,7 @@
 streamlit
 pymupdf
 reportlab
+langchain-groq
+python-docx
+python-dotenv
+

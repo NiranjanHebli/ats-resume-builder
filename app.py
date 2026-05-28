@@ -26,6 +26,9 @@ if active_page == "Editor":
 elif active_page == "About":
     from views.about import render_about
     render_about(brand_html)
+elif active_page == "Analysis":
+    from views.analysis import render_analysis
+    render_analysis()
 else:
     st.markdown(f"<h2>{active_page}</h2>", unsafe_allow_html=True)
     st.info("This section is under development.")
